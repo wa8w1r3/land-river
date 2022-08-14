@@ -1,8 +1,14 @@
-# Blockchain Land Registry
+# Land River
 
-Land registration system using Hyperledger Fabric
+Land title registration system using Hyperledger Fabric
 
-### Contributors:
+### This project is a part of Capstone Project - George Brown College
+
+---
+
+A continuation of [Blockchain Land Registry](https://github.com/rumjuice/blockchain-land-registry.git) project.
+
+Previous Contributors:
 
 - Ravshan: [LinkedIn](https://www.linkedin.com/in/rmakhmadaliev/) [GitHub](https://github.com/Ravshann)
 
@@ -11,8 +17,6 @@ Land registration system using Hyperledger Fabric
 - Hossein: [LinkedIn](https://www.linkedin.com/in/hossein-hesami-5a565b78/) [GitHub](https://github.com/DarioHesami)
 
 - Ramdhani: [LinkedIn](https://www.linkedin.com/in/ramdhaniharis/) [GitHub](https://github.com/rumjuice)
-
-### This project is part of dApp 1 - Enterprise Blockchain assignment
 
 ---
 

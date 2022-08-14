@@ -1,8 +1,8 @@
 {
-  "name": "blockchain-land-registry",
-  "version": "0.1.0",
+  "name": "land-river",
+  "version": "0.1.1",
   "description": "Land registration system using Hyperledger Fabric",
-  "repository": "https://github.com/rumjuice/blockchain-land-registry.git",
+  "repository": "https://github.com/rumjuice/land-river.git",
   "license": "MIT",
   "private": true,
   "workspaces": [
@@ -11,9 +11,9 @@
   "scripts": {
     "prestart": "yarn",
     "backend": "yarn workspace @app/backend",
-    "frontend": "yarn workspace @app/frontend",
+    "dashboard": "yarn workspace @app/dashboard",
     "chaincode": "yarn workspace @app/chaincode",
-    "start": "concurrently --kill-others-on-fail \"yarn backend start\" \"yarn frontend start\""
+    "start": "concurrently --kill-others-on-fail \"yarn backend start\" \"yarn dashboard start\""
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.33.0",
