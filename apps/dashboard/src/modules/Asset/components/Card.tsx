@@ -9,9 +9,9 @@ interface Props {
 }
 
 const Card: FC<Asset & Props> = ({
-  assetID,
+  id,
   owner,
-  area,
+  size,
   location,
   status,
   onTransfer,
@@ -28,8 +28,8 @@ const Card: FC<Asset & Props> = ({
         <span className="font-medium text-sm text-slate-800">
           Owned by {owner}
         </span>
-        <span className="text-sm text-slate-500">{area} m2</span>
-        <span className="text-xs text-slate-500">{assetID}</span>
+        <span className="text-sm text-slate-500">{size} m2</span>
+        <span className="text-xs text-slate-500">{id}</span>
       </div>
       <div className="ml-auto flex flex-col items-center justify-center gap-2">
         {status === AssetStatus.REGISTERED && (

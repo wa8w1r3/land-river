@@ -66,8 +66,6 @@ Owner - can transfer assets (that belong to them) to another owner.
 
 ## Step by step setup instructions
 
-1. Install docker if not installed
-2. Pull this repository from GitHub
 3. Go to apps folder and run to avoid permission related problems:  
    `sudo chmod -R +x fabric-network`
 4. Go to apps/fabric-network and run to pull fabric images from docker hub:  
@@ -77,7 +75,7 @@ Owner - can transfer assets (that belong to them) to another owner.
    `./network.sh up createChannel -ca -s couchdb`
 
 6. From the same location run to deploy the chaincode:  
-   `./network.sh deployCC -ccn basic -ccp ../../chaincode/ -ccl javascript`
+   `./network.sh deployCC -ccn basic -ccp ../../chaincode/ -ccl typescript`
 7. Go to project root folder and run the whole app with:
    `yarn start`  
    _OR_

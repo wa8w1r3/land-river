@@ -7,10 +7,10 @@ import {
   releaseAsset,
   transferAsset,
 } from "../repos";
-import { Asset, GetAsset, Transfer } from "../Types";
+import { Asset, Transfer } from "../Types";
 
 const List: FC = () => {
-  const [assets, setAssets] = useState<GetAsset[]>();
+  const [assets, setAssets] = useState<Asset[]>();
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [transferModal, setTransferModal] = useState<string>();
 
@@ -23,7 +23,8 @@ const List: FC = () => {
       const data = await getAssets();
       setAssets(data);
     } catch (error) {
-      alert(await error.response.json());
+      const err = await error;
+      alert(err.message);
     }
   }, []);
 
@@ -36,7 +37,7 @@ const List: FC = () => {
       await createAsset(data);
       fetchData();
     } catch (error) {
-      alert(await error.response.json());
+      alert(await error.message);
     }
     onCreateClose();
   }, []);
@@ -50,7 +51,7 @@ const List: FC = () => {
       await transferAsset(data);
       fetchData();
     } catch (error) {
-      alert(await error.response.json());
+      alert(await error.message);
     }
     onTransferClose();
   }, []);
@@ -60,7 +61,7 @@ const List: FC = () => {
       await holdAsset(id);
       fetchData();
     } catch (error) {
-      alert(await error.response.json());
+      alert(await error.message);
     }
   }, []);
 
@@ -69,7 +70,7 @@ const List: FC = () => {
       await releaseAsset(id);
       fetchData();
     } catch (error) {
-      alert(await error.response.json());
+      alert(await error.message);
     }
   }, []);
 
@@ -114,11 +115,11 @@ const List: FC = () => {
           {assets && assets.length > 0 ? (
             assets.map((asset) => (
               <Card
-                key={asset.Key}
-                {...asset.Record}
-                onTransfer={() => setTransferModal(asset.Key)}
-                onHold={() => onHold(asset.Key)}
-                onRelease={() => onRelease(asset.Key)}
+                key={asset.id}
+                {...asset}
+                onTransfer={() => setTransferModal(asset.id)}
+                onHold={() => onHold(asset.id)}
+                onRelease={() => onRelease(asset.id)}
               />
             ))
           ) : (

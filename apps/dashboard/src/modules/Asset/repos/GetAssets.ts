@@ -1,12 +1,12 @@
 import ky from "ky";
-import { GetAsset } from "../Types";
+import { Asset } from "../Types";
 
 /**
  * Get all asset.
  *
  * @returns assets
  */
-async function getAssets(): Promise<GetAsset[]> {
+async function getAssets(): Promise<Asset[]> {
   return await ky.get(`http://localhost:8080/assets`).json();
 }
 

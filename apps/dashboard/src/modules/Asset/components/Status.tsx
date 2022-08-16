@@ -9,22 +9,22 @@ interface Props {
 const Status: FC<Props> = ({ status }) => {
   const renderStatus = () => {
     switch (status) {
-      case AssetStatus.REGISTERED:
+      case AssetStatus.OWNED:
         return (
           <>
             <HomeIcon className="stroke-green-600" />
             <span className="text-green-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.REGISTERED.toUpperCase()}
+              {AssetStatus.OWNED}
             </span>
           </>
         );
 
-      case AssetStatus.NOT_REGISTERED:
+      case AssetStatus.REGISTERED:
         return (
           <>
             <HomeIcon className="stroke-slate-600" />
             <span className="text-slate-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.NOT_REGISTERED.toUpperCase()}
+              {AssetStatus.REGISTERED}
             </span>
           </>
         );
@@ -34,7 +34,7 @@ const Status: FC<Props> = ({ status }) => {
           <>
             <HomeIcon className="stroke-red-600" />
             <span className="text-red-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.LOCKED.toUpperCase()}
+              {AssetStatus.LOCKED}
             </span>
           </>
         );

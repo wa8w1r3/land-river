@@ -1,22 +1,21 @@
 import { useFormik } from "formik";
 import { FC } from "react";
 import ReactModal from "react-modal";
-import { Asset, AssetStatus } from "../Types";
+import { Asset } from "../Types";
 import Input from "./Input";
 
 interface Props {
   show: boolean;
   onClose(): void;
-  onSubmit(formData: Omit<Asset, "assetID">): void;
+  onSubmit(formData: Omit<Asset, "id">): void;
 }
 
 const CreateAssetModal: FC<Props> = ({ show, onClose, onSubmit }) => {
   const formik = useFormik({
     initialValues: {
-      area: "",
+      size: 0,
       location: "",
       owner: "",
-      status: AssetStatus.REGISTERED,
     },
     onSubmit: (values, { resetForm }) => {
       onSubmit(values);
@@ -73,9 +72,9 @@ const CreateAssetModal: FC<Props> = ({ show, onClose, onSubmit }) => {
               onChange={formik.handleChange}
             />
             <Input
-              name="area"
-              placeholder="Input area in m2"
-              value={formik.values.area}
+              name="size"
+              placeholder="Input size in m2"
+              value={formik.values.size}
               onChange={formik.handleChange}
             />
           </div>

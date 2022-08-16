@@ -26,8 +26,7 @@ async function get() {
  */
 async function getById(id) {
   try {
-    const asset = await evaluateTransaction("ReadAsset", id);
-    return JSON.parse(asset);
+    return evaluateTransaction("GetAsset", id);
   } catch (error) {
     throw new Error(error);
   }
@@ -45,13 +44,12 @@ async function create(assetObject) {
 
     await submitTransaction("CreateAsset", [
       id,
-      assetObject.area,
+      assetObject.size,
       assetObject.location,
       assetObject.owner,
-      assetObject.status,
     ]);
 
-    const result = await evaluateTransaction("ReadAsset", id);
+    const result = await evaluateTransaction("GetAsset", id);
 
     return JSON.parse(result);
   } catch (error) {
@@ -72,7 +70,7 @@ async function transfer(transferObject) {
       transferObject.owner,
     ]);
 
-    const result = await evaluateTransaction("ReadAsset", transferObject.id);
+    const result = await evaluateTransaction("GetAsset", transferObject.id);
 
     return JSON.parse(result);
   } catch (error) {
@@ -89,7 +87,7 @@ async function transfer(transferObject) {
 async function hold(id) {
   try {
     await submitTransaction("HoldAsset", [id]);
-    const result = await evaluateTransaction("ReadAsset", id);
+    const result = await evaluateTransaction("GetAsset", id);
 
     return JSON.parse(result);
   } catch (error) {
@@ -106,7 +104,7 @@ async function hold(id) {
 async function unhold(id) {
   try {
     await submitTransaction("UnHoldAsset", [id]);
-    const result = await evaluateTransaction("ReadAsset", id);
+    const result = await evaluateTransaction("GetAsset", id);
 
     return JSON.parse(result);
   } catch (error) {
