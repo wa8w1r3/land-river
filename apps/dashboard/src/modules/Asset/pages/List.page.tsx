@@ -1,8 +1,8 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { DocumentIcon, HomeIcon, LoadingIcon } from "../../../components";
+import { Asset } from "../Asset.types";
 import { Table } from "../components";
 import { getAssets } from "../repos";
-import { Asset } from "../Types";
 
 const List: FC = () => {
   const [assets, setAssets] = useState<Asset[]>();

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AssetStatus } from "../Types";
+import { AssetStatus } from "../Asset.types";
 
 interface Props {
   status: AssetStatus;

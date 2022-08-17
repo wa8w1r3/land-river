@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { FC } from "react";
 import ReactModal from "react-modal";
 import { Input } from "../../../components";
-import { Transfer } from "../Types";
+import { Transfer } from "../Asset.types";
 
 interface Props {
   show?: string;

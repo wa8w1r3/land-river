@@ -1,5 +1,5 @@
 import ky from "ky";
-import { Asset } from "../Types";
+import { Asset } from "../Asset.types";
 
 /**
  * Create asset.

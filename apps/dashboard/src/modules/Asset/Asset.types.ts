@@ -1,6 +1,6 @@
 export enum AssetStatus {
-  OWNED,
   REGISTERED,
+  OWNED,
   LOCKED,
   TRANSFER_PENDING,
 }

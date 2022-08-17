@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
+import { Asset, Transfer } from "../Asset.types";
 import { Card, CreateAssetModal, TransferModal } from "../components";
 import {
   createAsset,
@@ -7,7 +8,6 @@ import {
   releaseAsset,
   transferAsset,
 } from "../repos";
-import { Asset, Transfer } from "../Types";
 
 const Detail: FC = () => {
   const [assets, setAssets] = useState<Asset[]>();

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Asset, AssetStatus } from "../Types";
+import { Asset, AssetStatus } from "../Asset.types";
 import Status from "./Status";
 
 interface Props {

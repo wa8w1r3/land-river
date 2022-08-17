@@ -1,5 +1,5 @@
 import ky from "ky";
-import { Transfer } from "../Types";
+import { Transfer } from "../Asset.types";
 
 /**
  * Transfer asset.
