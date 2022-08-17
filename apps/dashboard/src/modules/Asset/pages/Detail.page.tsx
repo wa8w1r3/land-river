@@ -1,15 +1,16 @@
 import { useFormik } from "formik";
 import { FC, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Input } from "../../../components";
-import { Asset, AssetStatus } from "../Asset.types";
+import { Input, LoadingIcon } from "../../../components";
+import { Asset, AssetStatus, Transfer } from "../Asset.types";
 import { Actions, Status } from "../components";
-import { getAssetDetail } from "../repos";
+import { getAssetDetail, transferAsset } from "../repos";
 
 const Detail: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [asset, setAsset] = useState<Asset>();
+  const [loading, setLoading] = useState<boolean>();
 
   useEffect(() => {
     if (id) fetchData(id);
@@ -33,18 +34,32 @@ const Detail: FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      id: asset?.id,
+      id: id,
       owner: "",
     },
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       if (values.owner !== "") {
-        // call api
-        setTimeout(() => resetForm(), 2000);
+        setLoading(true);
+        handleTransfer(values as Transfer);
       }
     },
     validateOnChange: true,
     enableReinitialize: true,
   });
+
+  const handleTransfer = async (_asset: Transfer) => {
+    try {
+      await transferAsset({ id: _asset.id, owner: _asset.owner });
+      setTimeout(() => {
+        formik.resetForm();
+        setLoading(false);
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      const err = await error;
+      alert(err.message);
+    }
+  };
 
   return (
     <div className="flex flex-col w-2/3 h-full mt-8 gap-8 z-10">
@@ -78,21 +93,31 @@ const Detail: FC = () => {
               status={asset.status as AssetStatus}
               onClick={handleAction}
             />
-            <div className="flex pt-4 border-t-2">
-              <Input
-                name="owner"
-                title="Transfer to"
-                placeholder="Input new owner"
-                value={formik.values.owner}
-                onChange={formik.handleChange}
-              />
-              <button
-                className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-amber-600 border border-transparent rounded-md hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-700"
-                onClick={() => formik.handleSubmit()}
-              >
-                Transfer Asset
-              </button>
-            </div>
+            {asset.status === AssetStatus.OWNED && (
+              <div className="flex pt-4 border-t-2">
+                <Input
+                  name="owner"
+                  title="Transfer to"
+                  placeholder="Input new owner"
+                  value={formik.values.owner}
+                  onChange={formik.handleChange}
+                />
+                <button
+                  className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-amber-600 border border-transparent rounded-md hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-700"
+                  onClick={() => formik.handleSubmit()}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <LoadingIcon className="animate-spin w-5 fill-white mr-2" />
+                      Please wait..
+                    </>
+                  ) : (
+                    "Transfer Asset"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
           <iframe
             className="h-full max-h-screen xl:min-w-[30rem] lg:min-w-[25rem] md:min-w-[20rem] shadow-md"
