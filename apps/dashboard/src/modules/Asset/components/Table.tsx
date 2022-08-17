@@ -4,7 +4,7 @@ import Status from "./Status";
 
 interface Props {
   assets: Asset[];
-  onClick(): void;
+  onClick(id: string): void;
 }
 
 const Table = ({ assets, onClick }: Props): ReactElement => {
@@ -24,7 +24,7 @@ const Table = ({ assets, onClick }: Props): ReactElement => {
           <tr
             key={asset.id}
             className="cursor-pointer hover:bg-slate-50"
-            onClick={onClick}
+            onClick={() => onClick(asset.id)}
           >
             <td className="p-2">{asset.id}</td>
             <td>{asset.owner}</td>

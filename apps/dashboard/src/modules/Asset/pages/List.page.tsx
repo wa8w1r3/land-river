@@ -1,10 +1,12 @@
 import { FC, useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DocumentIcon, HomeIcon, LoadingIcon } from "../../../components";
 import { Asset } from "../Asset.types";
 import { Table } from "../components";
 import { getAssets } from "../repos";
 
 const List: FC = () => {
+  const navigate = useNavigate();
   const [assets, setAssets] = useState<Asset[]>();
 
   useEffect(() => {
@@ -20,6 +22,10 @@ const List: FC = () => {
       alert(err.message);
     }
   }, []);
+
+  const goToDetail = (id: string) => {
+    navigate(`detail/${id}`);
+  };
 
   // TODO move create asset form to new page
   // const onCreateClose = useCallback(() => {
@@ -53,7 +59,7 @@ const List: FC = () => {
             </button>
           </div>
           {assets && assets.length > 0 ? (
-            <Table assets={assets} onClick={() => null} />
+            <Table assets={assets} onClick={goToDetail} />
           ) : (
             <h2 className="mt-4">
               No assets registered. Please create a new asset.
