@@ -3,13 +3,14 @@ import { Asset } from "../Types";
 
 interface Props {
   assets: Asset[];
+  onClick(): void;
 }
 
-const Table = ({ assets }: Props): ReactElement => {
+const Table = ({ assets, onClick }: Props): ReactElement => {
   return (
     <table className="table-auto">
       <thead>
-        <tr>
+        <tr className="font-medium border-b-2">
           <td className="p-4">ID</td>
           <td>Owner</td>
           <td>Location</td>
@@ -19,7 +20,11 @@ const Table = ({ assets }: Props): ReactElement => {
       </thead>
       <tbody>
         {assets.map((asset) => (
-          <tr key={asset.id}>
+          <tr
+            key={asset.id}
+            className="cursor-pointer hover:bg-slate-50"
+            onClick={onClick}
+          >
             <td className="p-2">{asset.id}</td>
             <td>{asset.owner}</td>
             <td>{asset.location}</td>

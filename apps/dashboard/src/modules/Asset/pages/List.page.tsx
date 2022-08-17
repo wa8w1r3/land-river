@@ -40,7 +40,7 @@ const List: FC = () => {
       <section className="flex-col text-white">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <h3 className="font-medium">
-          Hi Admin! Welcome back to the dashboard.
+          Hi Admin! Welcome back to the Land River dashboard.
         </h3>
       </section>
       <section className="flex w-full gap-4">
@@ -55,7 +55,7 @@ const List: FC = () => {
             </button>
           </div>
           {assets && assets.length > 0 ? (
-            <Table assets={assets} />
+            <Table assets={assets} onClick={() => null} />
           ) : (
             <h2 className="mt-4">
               No assets registered. Please create a new asset.
