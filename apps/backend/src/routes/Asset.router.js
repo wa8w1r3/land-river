@@ -81,7 +81,7 @@ router.post(path.lock, async (req, res) => {
     return res.status(BAD_REQUEST).json("Asset ID is required!");
 
   try {
-    const tx = await AssetService.hold(req.params.assetId);
+    const tx = await AssetService.lock(req.params.assetId);
     return res.status(OK).json(tx);
   } catch (error) {
     return res.status(INTERNAL_SERVER_ERROR).json(error);
@@ -96,7 +96,7 @@ router.post(path.release, async (req, res) => {
     return res.status(BAD_REQUEST).json("Asset ID is required!");
 
   try {
-    const tx = await AssetService.unhold(req.params.assetId);
+    const tx = await AssetService.release(req.params.assetId);
     return res.status(OK).json(tx);
   } catch (error) {
     return res.status(INTERNAL_SERVER_ERROR).json(error);

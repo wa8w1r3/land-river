@@ -26,7 +26,8 @@ async function get() {
  */
 async function getById(id) {
   try {
-    return evaluateTransaction("GetAsset", id);
+    const asset = await evaluateTransaction("GetAsset", id);
+    return JSON.parse(asset);
   } catch (error) {
     throw new Error(error);
   }
@@ -35,18 +36,18 @@ async function getById(id) {
 /**
  * Create new asset.
  *
- * @param assetObject
+ * @param asset
  * @returns
  */
-async function create(assetObject) {
+async function create(asset) {
   try {
     const id = uuid();
 
     await submitTransaction("CreateAsset", [
       id.slice(0, 8),
-      assetObject.size,
-      assetObject.location,
-      assetObject.owner,
+      asset.size,
+      asset.location,
+      asset.owner,
     ]);
 
     const result = await evaluateTransaction("GetAsset", id);
@@ -60,17 +61,14 @@ async function create(assetObject) {
 /**
  * Transfer asset.
  *
- * @param transferObject
+ * @param asset
  * @returns
  */
-async function transfer(transferObject) {
+async function transfer(asset) {
   try {
-    await submitTransaction("TransferAsset", [
-      transferObject.id,
-      transferObject.owner,
-    ]);
+    await submitTransaction("TransferAsset", [asset.id, asset.owner]);
 
-    const result = await evaluateTransaction("GetAsset", transferObject.id);
+    const result = await evaluateTransaction("GetAsset", asset.id);
 
     return JSON.parse(result);
   } catch (error) {
@@ -79,14 +77,15 @@ async function transfer(transferObject) {
 }
 
 /**
- * hold asset.
+ * Lock asset.
  *
  * @param id
  * @returns
  */
-async function hold(id) {
+async function lock(id) {
   try {
-    await submitTransaction("HoldAsset", [id]);
+    await submitTransaction("LockAsset", [id]);
+
     const result = await evaluateTransaction("GetAsset", id);
 
     return JSON.parse(result);
@@ -96,14 +95,15 @@ async function hold(id) {
 }
 
 /**
- * Unhold asset.
+ * Release asset.
  *
  * @param id
  * @returns
  */
-async function unhold(id) {
+async function release(id) {
   try {
-    await submitTransaction("UnHoldAsset", [id]);
+    await submitTransaction("ReleaseAsset", [id]);
+
     const result = await evaluateTransaction("GetAsset", id);
 
     return JSON.parse(result);
@@ -117,6 +117,6 @@ export default {
   getById,
   create,
   transfer,
-  hold,
-  unhold,
+  lock,
+  release,
 };

@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import { FC } from "react";
 import ReactModal from "react-modal";
-import { Input } from "../../../components";
 import { Transfer } from "../Asset.types";
 
 interface Props {
@@ -58,12 +57,12 @@ const TransferModal: FC<Props> = ({ show, onClose, onSubmit }) => {
             </button>
           </div>
           <div className="py-4 px-6 text-sm flex flex-col gap-4">
-            <Input
+            {/* <Input
               name="owner"
               placeholder="Input new owner"
               value={formik.values.owner}
               onChange={formik.handleChange}
-            />
+            /> */}
           </div>
           <div className="flex items-center py-4 px-6 rounded-b border-t border-slate-200">
             <button

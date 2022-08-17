@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import { FC } from "react";
 import ReactModal from "react-modal";
-import { Input } from "../../../components";
 import { Asset } from "../Asset.types";
 
 interface Props {
@@ -59,7 +58,7 @@ const CreateAssetModal: FC<Props> = ({ show, onClose, onSubmit }) => {
             </button>
           </div>
           <div className="py-4 px-6 text-sm flex flex-col gap-4">
-            <Input
+            {/* <Input
               name="location"
               placeholder="Input asset location"
               value={formik.values.location}
@@ -76,7 +75,7 @@ const CreateAssetModal: FC<Props> = ({ show, onClose, onSubmit }) => {
               placeholder="Input size in m2"
               value={formik.values.size}
               onChange={formik.handleChange}
-            />
+            /> */}
           </div>
           <div className="flex items-center py-4 px-6 rounded-b border-t border-slate-200">
             <button

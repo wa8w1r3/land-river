@@ -1,134 +1,111 @@
+import { useFormik } from "formik";
 import { FC, useCallback, useEffect, useState } from "react";
-import { Asset, Transfer } from "../Asset.types";
-import { Card, CreateAssetModal, TransferModal } from "../components";
-import {
-  createAsset,
-  getAssets,
-  holdAsset,
-  releaseAsset,
-  transferAsset,
-} from "../repos";
+import { useNavigate, useParams } from "react-router-dom";
+import { Input } from "../../../components";
+import { Asset, AssetStatus } from "../Asset.types";
+import { Actions, Status } from "../components";
+import { getAssetDetail } from "../repos";
 
 const Detail: FC = () => {
-  const [assets, setAssets] = useState<Asset[]>();
-  const [createModal, setCreateModal] = useState<boolean>(false);
-  const [transferModal, setTransferModal] = useState<string>();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [asset, setAsset] = useState<Asset>();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (id) fetchData(id);
+    else navigate("/");
+  }, [id]);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (_id: string) => {
     try {
-      const data = await getAssets();
-      setAssets(data);
+      const data = await getAssetDetail(_id);
+
+      setAsset(data);
     } catch (error) {
       const err = await error;
       alert(err.message);
     }
   }, []);
 
-  const onCreateClose = useCallback(() => {
-    setCreateModal(false);
+  const handleAction = useCallback(() => {
+    // handle lock and release asset
   }, []);
 
-  const onCreateAsset = useCallback(async (data: Asset) => {
-    try {
-      await createAsset(data);
-      fetchData();
-    } catch (error) {
-      alert(await error.message);
-    }
-    onCreateClose();
-  }, []);
-
-  const onTransferClose = useCallback(() => {
-    setTransferModal(undefined);
-  }, []);
-
-  const onTransferAsset = useCallback(async (data: Transfer) => {
-    try {
-      await transferAsset(data);
-      fetchData();
-    } catch (error) {
-      alert(await error.message);
-    }
-    onTransferClose();
-  }, []);
-
-  const onHold = useCallback(async (id: string) => {
-    try {
-      await holdAsset(id);
-      fetchData();
-    } catch (error) {
-      alert(await error.message);
-    }
-  }, []);
-
-  const onRelease = useCallback(async (id: string) => {
-    try {
-      await releaseAsset(id);
-      fetchData();
-    } catch (error) {
-      alert(await error.message);
-    }
-  }, []);
+  const formik = useFormik({
+    initialValues: {
+      id: asset?.id,
+      owner: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      if (values.owner !== "") {
+        // call api
+        setTimeout(() => resetForm(), 2000);
+      }
+    },
+    validateOnChange: true,
+    enableReinitialize: true,
+  });
 
   return (
-    <div className="flex w-2/3 h-full mt-8 gap-4 z-10">
-      <CreateAssetModal
-        onClose={onCreateClose}
-        show={createModal}
-        onSubmit={onCreateAsset}
-      />
-      <TransferModal
-        onClose={onTransferClose}
-        show={transferModal}
-        onSubmit={onTransferAsset}
-      />
-      <section className="flex-initial">
-        <iframe
-          className="h-full max-h-screen xl:min-w-[30rem] lg:min-w-[25rem] md:min-w-[20rem]"
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5613.513741277526!2d-79.41348504077459!3d43.67592552614158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1655441998679!5m2!1sen!2sca"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          tabIndex={0}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+    <div className="flex flex-col w-2/3 h-full mt-8 gap-8 z-10">
+      <section className="flex-col text-white">
+        <h1 className="text-3xl font-bold">Asset Detail</h1>
       </section>
-      <section className="flex flex-col w-full gap-2">
-        <div className="flex p-2">
-          <h2 className="text-lg text-center font-medium text-emerald-900">
-            Asset List
-          </h2>
-          <button
-            className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-emerald-900 bg-emerald-100 border border-transparent rounded-md hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500"
-            onClick={() => setCreateModal(true)}
-          >
-            Create Asset
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-4 h-full overflow-y-auto max-h-screen">
-          {assets && assets.length > 0 ? (
-            assets.map((asset) => (
-              <Card
-                key={asset.id}
-                {...asset}
-                onTransfer={() => setTransferModal(asset.id)}
-                onHold={() => onHold(asset.id)}
-                onRelease={() => onRelease(asset.id)}
+      {asset && (
+        <section className="flex w-full gap-4">
+          <div className="flex flex-col gap-4 p-4 flex-none w-1/2 rounded-md shadow-md bg-white">
+            <div className="flex">
+              <h2 className="text-lg font-medium mr-auto">
+                Asset ID: {asset.id}
+              </h2>
+              <Status status={asset.status as AssetStatus} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">Owned by</span>
+                <span>{asset.owner}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">Location</span>
+                <span>{asset.location}</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">Size</span>
+                <span>{asset.size} m2</span>
+              </div>
+            </div>
+            <Actions
+              status={asset.status as AssetStatus}
+              onClick={handleAction}
+            />
+            <div className="flex pt-4 border-t-2">
+              <Input
+                name="owner"
+                title="Transfer to"
+                placeholder="Input new owner"
+                value={formik.values.owner}
+                onChange={formik.handleChange}
               />
-            ))
-          ) : (
-            <h2 className="p-4 mt-4">
-              No assets registered. Please create a new asset.
-            </h2>
-          )}
-        </div>
-      </section>
+              <button
+                className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-amber-600 border border-transparent rounded-md hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-700"
+                onClick={() => formik.handleSubmit()}
+              >
+                Transfer Asset
+              </button>
+            </div>
+          </div>
+          <iframe
+            className="h-full max-h-screen xl:min-w-[30rem] lg:min-w-[25rem] md:min-w-[20rem] shadow-md"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5613.513741277526!2d-79.41348504077459!3d43.67592552614158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1655441998679!5m2!1sen!2sca"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            tabIndex={0}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </section>
+      )}
     </div>
   );
 };

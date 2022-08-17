@@ -6,7 +6,6 @@ import { getAssets } from "../repos";
 
 const List: FC = () => {
   const [assets, setAssets] = useState<Asset[]>();
-  // const [createModal, setCreateModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchData();
@@ -22,7 +21,7 @@ const List: FC = () => {
     }
   }, []);
 
-  // TODO move create form to new page
+  // TODO move create asset form to new page
   // const onCreateClose = useCallback(() => {
   //   setCreateModal(false);
   // }, []);
@@ -49,10 +48,7 @@ const List: FC = () => {
         <div className="flex flex-col gap-4 p-4 flex-none w-3/4 rounded-md shadow-md bg-white">
           <div className="flex px-2">
             <h2 className="text-lg font-medium">Asset List</h2>
-            <button
-              className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-dark"
-              // onClick={() => setCreateModal(true)}
-            >
+            <button className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-primary-dark border border-transparent rounded-md hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">
               Create Asset
             </button>
           </div>

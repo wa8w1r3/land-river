@@ -5,7 +5,7 @@ import ky from "ky";
  *
  */
 async function releaseAsset(id: string): Promise<void> {
-  await ky.post(`http://localhost:8080/unhold/${id}`).json();
+  await ky.post(`http://localhost:8080/release/${id}`).json();
 }
 
 export default releaseAsset;

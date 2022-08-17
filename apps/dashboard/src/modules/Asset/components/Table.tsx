@@ -30,7 +30,7 @@ const Table = ({ assets, onClick }: Props): ReactElement => {
             <td>{asset.owner}</td>
             <td>{asset.location}</td>
             <td>{asset.size} m2</td>
-            <td>
+            <td className="text-center">
               <Status status={asset.status as AssetStatus} />
             </td>
           </tr>

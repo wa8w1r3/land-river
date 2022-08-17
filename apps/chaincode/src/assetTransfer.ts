@@ -275,10 +275,7 @@ export class AssetTransfer extends Contract {
         asset.owner,
         asset.status,
       );
-      // await ctx.stub.putState(
-      //   asset.ID,
-      //   Buffer.from(stringify(sortKeysRecursive(asset))),
-      // );
+
       console.info(`Asset ${asset.id} initialized`);
     }
   }
