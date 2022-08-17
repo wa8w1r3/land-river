@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
+import { HomeIcon } from "../../../components";
 import { AssetStatus } from "../Types";
-import HomeIcon from "./HomeIcon";
 
 interface Props {
   status: AssetStatus;

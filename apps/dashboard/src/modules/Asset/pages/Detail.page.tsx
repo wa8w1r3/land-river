@@ -9,7 +9,7 @@ import {
 } from "../repos";
 import { Asset, Transfer } from "../Types";
 
-const List: FC = () => {
+const Detail: FC = () => {
   const [assets, setAssets] = useState<Asset[]>();
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [transferModal, setTransferModal] = useState<string>();
@@ -75,7 +75,7 @@ const List: FC = () => {
   }, []);
 
   return (
-    <div className="flex w-full h-full mt-8 gap-4">
+    <div className="flex w-2/3 h-full mt-8 gap-4 z-10">
       <CreateAssetModal
         onClose={onCreateClose}
         show={createModal}
@@ -133,4 +133,4 @@ const List: FC = () => {
   );
 };
 
-export default List;
+export default Detail;

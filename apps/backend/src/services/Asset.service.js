@@ -43,7 +43,7 @@ async function create(assetObject) {
     const id = uuid();
 
     await submitTransaction("CreateAsset", [
-      id,
+      id.slice(0, 8),
       assetObject.size,
       assetObject.location,
       assetObject.owner,

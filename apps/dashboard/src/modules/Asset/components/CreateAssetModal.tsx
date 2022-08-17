@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { FC } from "react";
 import ReactModal from "react-modal";
+import { Input } from "../../../components";
 import { Asset } from "../Types";
-import Input from "./Input";
 
 interface Props {
   show: boolean;
