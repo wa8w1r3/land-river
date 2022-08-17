@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
+import { DocumentIcon, HomeIcon, LoadingIcon } from "../../../components";
 import { Table } from "../components";
 import { getAssets } from "../repos";
 import { Asset } from "../Types";
@@ -45,7 +46,7 @@ const List: FC = () => {
         </h3>
       </section>
       <section className="flex w-full gap-4">
-        <div className="flex flex-col gap-4 p-4 w-3/4 rounded-md shadow-md bg-white">
+        <div className="flex flex-col gap-4 p-4 flex-none w-3/4 rounded-md shadow-md bg-white">
           <div className="flex px-2">
             <h2 className="text-lg font-medium">Asset List</h2>
             <button
@@ -62,6 +63,29 @@ const List: FC = () => {
               No assets registered. Please create a new asset.
             </h2>
           )}
+        </div>
+        <div className="flex flex-col gap-4 w-full">
+          <div className="flex rounded-md shadow-md bg-amber-600 text-white p-4 gap-4">
+            <HomeIcon className="w-10 fill-white" />
+            <div>
+              <h1 className="text-2xl font-bold">2500</h1>
+              <h4>Assets Registered</h4>
+            </div>
+          </div>
+          <div className="flex rounded-md shadow-md bg-blue-600 text-white p-4 gap-4">
+            <DocumentIcon className="w-10" />
+            <div>
+              <h1 className="text-2xl font-bold">150</h1>
+              <h4>Transactions</h4>
+            </div>
+          </div>
+          <div className="flex rounded-md shadow-md bg-rose-600 text-white p-4 gap-4">
+            <LoadingIcon className="w-10 motion-safe:animate-pulse fill-white" />
+            <div>
+              <h1 className="text-2xl font-bold">15</h1>
+              <h4>Pending Transfer</h4>
+            </div>
+          </div>
         </div>
       </section>
     </div>
