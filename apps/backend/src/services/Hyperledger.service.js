@@ -49,6 +49,8 @@ async function init() {
     const network = await gateway.getNetwork(channelName);
     contract = network.getContract(chaincodeName);
 
+    // await contract.submitTransaction("InitLedger");
+
     console.log("Fabric initialized successfully!");
   } catch (error) {
     throw new Error("Failed to initialize fabric", error);

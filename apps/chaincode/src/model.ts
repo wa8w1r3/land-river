@@ -31,11 +31,17 @@ export class Asset {
   @Property()
   status: AssetStatus;
 
-  constructor(id: string, size: number, location: string, owner?: string) {
+  constructor(
+    id: string,
+    size: number,
+    location: string,
+    owner?: string,
+    status?: AssetStatus,
+  ) {
     this.id = id;
     this.size = size;
     this.location = location;
     this.owner = owner;
-    this.status = AssetStatus.OWNED;
+    this.status = status ?? AssetStatus.OWNED;
   }
 }

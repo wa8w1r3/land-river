@@ -2,7 +2,6 @@
  SPDX-License-Identifier: Apache-2.0
 */
 
-// const { Contract } = require("fabric-contract-api");
 import {
   Context,
   Contract,
@@ -13,7 +12,7 @@ import {
 import { Asset, AssetStatus } from "./model";
 
 @Info({
-  title: "AssetTransfer",
+  title: "Asset Transfer Contract",
   description: "Smart contract for transferring assets",
 })
 export class AssetTransfer extends Contract {
@@ -27,13 +26,14 @@ export class AssetTransfer extends Contract {
     size: number,
     location: string,
     owner: string,
+    status?: AssetStatus,
   ): Promise<void> {
     const exists = await this._AssetExists(ctx, id);
     if (exists) {
       throw new Error(`Asset id ${id} is already exists`);
     }
 
-    const newAsset = new Asset(id, size, location, owner);
+    const newAsset = new Asset(id, size, location, owner, status);
     await ctx.stub.putState(id, Buffer.from(JSON.stringify(newAsset)));
 
     // If owner exist, add to the index
@@ -211,7 +211,75 @@ export class AssetTransfer extends Contract {
   @Transaction(false)
   @Returns("boolean")
   private async _AssetExists(ctx: Context, id: string): Promise<boolean> {
-    let assetState = await ctx.stub.getState(id);
+    const assetState = await ctx.stub.getState(id);
     return assetState && assetState.length > 0;
+  }
+
+  /**
+   * Initialize Ledger with pre-defined data
+   * !! ONLY FOR DEVELOPMENT !!
+   */
+  @Transaction()
+  public async InitLedger(ctx: Context): Promise<void> {
+    const assets = [
+      {
+        id: "1a1a1a1a",
+        location: "1 Queen st",
+        size: 500,
+        owner: "Leslie Knope",
+        status: AssetStatus.LOCKED,
+      },
+      {
+        id: "1a1a1a1b",
+        location: "2 King st",
+        size: 2500,
+        owner: "Ron Swanson",
+        status: AssetStatus.OWNED,
+      },
+      {
+        id: "1a1a1a1c",
+        location: "3 Jack st",
+        size: 45,
+        owner: "Bert Macklin",
+        status: AssetStatus.OWNED,
+      },
+      {
+        id: "1a1a1a1d",
+        location: "4 Ace st",
+        size: 10,
+        owner: "Donna Meagle",
+        status: AssetStatus.OWNED,
+      },
+      {
+        id: "1a1a1a1e",
+        location: "5 Spade st",
+        size: 150,
+        owner: "Gerry Gergitch",
+        status: AssetStatus.REGISTERED,
+      },
+      {
+        id: "1a1a1a1f",
+        location: "6 Heart st",
+        size: 1500,
+        owner: "April Ludgate",
+        status: AssetStatus.OWNED,
+      },
+    ];
+
+    for (const asset of assets) {
+      await this.CreateAsset(
+        ctx,
+        asset.id,
+        asset.size,
+        asset.location,
+        asset.owner,
+        asset.status,
+      );
+      // await ctx.stub.putState(
+      //   asset.ID,
+      //   Buffer.from(stringify(sortKeysRecursive(asset))),
+      // );
+      console.info(`Asset ${asset.id} initialized`);
+    }
   }
 }
