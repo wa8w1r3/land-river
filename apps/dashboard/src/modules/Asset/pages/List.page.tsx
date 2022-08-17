@@ -21,6 +21,7 @@ const List: FC = () => {
     }
   }, []);
 
+  // TODO move create form to new page
   // const onCreateClose = useCallback(() => {
   //   setCreateModal(false);
   // }, []);
@@ -45,7 +46,7 @@ const List: FC = () => {
       </section>
       <section className="flex w-full gap-4">
         <div className="flex flex-col gap-4 p-4 w-3/4 rounded-md shadow-md bg-white">
-          <div className="flex">
+          <div className="flex px-2">
             <h2 className="text-lg font-medium">Asset List</h2>
             <button
               className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-primary border border-transparent rounded-md hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-dark"

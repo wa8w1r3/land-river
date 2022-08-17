@@ -1,5 +1,4 @@
-import { FC, memo } from "react";
-import { HomeIcon } from "../../../components";
+import { FC } from "react";
 import { AssetStatus } from "../Types";
 
 interface Props {
@@ -12,29 +11,32 @@ const Status: FC<Props> = ({ status }) => {
       case AssetStatus.OWNED:
         return (
           <>
-            <HomeIcon className="stroke-green-600" />
-            <span className="text-green-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.OWNED}
+            <span className="bg-primary font-semibold text-center leading-4 rounded-xl py-1 px-3 text-sm text-white">
+              Owned
             </span>
           </>
         );
-
       case AssetStatus.REGISTERED:
         return (
           <>
-            <HomeIcon className="stroke-slate-600" />
-            <span className="text-slate-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.REGISTERED}
+            <span className="bg-slate-500 font-semibold text-center leading-4 rounded-xl py-1 px-3 text-sm text-white">
+              Registered
             </span>
           </>
         );
-
+      case AssetStatus.TRANSFER_PENDING:
+        return (
+          <>
+            <span className="bg-amber-500 font-semibold text-center leading-4 rounded-xl py-1 px-3 text-sm text-white">
+              Transfer Pending
+            </span>
+          </>
+        );
       default:
         return (
           <>
-            <HomeIcon className="stroke-red-600" />
-            <span className="text-red-600 font-semibold text-center leading-4 text-sm">
-              {AssetStatus.LOCKED}
+            <span className="bg-red-500 font-semibold text-center leading-4 rounded-xl py-1 px-3 text-sm text-white">
+              Locked
             </span>
           </>
         );
@@ -45,4 +47,4 @@ const Status: FC<Props> = ({ status }) => {
   );
 };
 
-export default memo(Status);
+export default Status;

@@ -49,6 +49,7 @@ async function init() {
     const network = await gateway.getNetwork(channelName);
     contract = network.getContract(chaincodeName);
 
+    // Uncomment below to initialize ledger with sample data
     // await contract.submitTransaction("InitLedger");
 
     console.log("Fabric initialized successfully!");

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import { Asset } from "../Types";
+import { Asset, AssetStatus } from "../Types";
+import Status from "./Status";
 
 interface Props {
   assets: Asset[];
@@ -15,7 +16,7 @@ const Table = ({ assets, onClick }: Props): ReactElement => {
           <td>Owner</td>
           <td>Location</td>
           <td>Size</td>
-          <td>Status</td>
+          <td className="text-center">Status</td>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +30,9 @@ const Table = ({ assets, onClick }: Props): ReactElement => {
             <td>{asset.owner}</td>
             <td>{asset.location}</td>
             <td>{asset.size} m2</td>
-            <td>{asset.status}</td>
+            <td>
+              <Status status={asset.status as AssetStatus} />
+            </td>
           </tr>
         ))}
       </tbody>
