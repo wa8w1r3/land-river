@@ -1,8 +1,14 @@
-# Blockchain Land Registry
+# Land River
 
-Land registration system using Hyperledger Fabric
+Land title registration system using Hyperledger Fabric
 
-### Contributors:
+### This project is a part of Capstone Project - George Brown College
+
+---
+
+A continuation of [Blockchain Land Registry](https://github.com/rumjuice/blockchain-land-registry.git) project.
+
+Previous Contributors:
 
 - Ravshan: [LinkedIn](https://www.linkedin.com/in/rmakhmadaliev/) [GitHub](https://github.com/Ravshann)
 
@@ -11,8 +17,6 @@ Land registration system using Hyperledger Fabric
 - Hossein: [LinkedIn](https://www.linkedin.com/in/hossein-hesami-5a565b78/) [GitHub](https://github.com/DarioHesami)
 
 - Ramdhani: [LinkedIn](https://www.linkedin.com/in/ramdhaniharis/) [GitHub](https://github.com/rumjuice)
-
-### This project is part of dApp 1 - Enterprise Blockchain assignment
 
 ---
 
@@ -62,8 +66,6 @@ Owner - can transfer assets (that belong to them) to another owner.
 
 ## Step by step setup instructions
 
-1. Install docker if not installed
-2. Pull this repository from GitHub
 3. Go to apps folder and run to avoid permission related problems:  
    `sudo chmod -R +x fabric-network`
 4. Go to apps/fabric-network and run to pull fabric images from docker hub:  
@@ -73,7 +75,7 @@ Owner - can transfer assets (that belong to them) to another owner.
    `./network.sh up createChannel -ca -s couchdb`
 
 6. From the same location run to deploy the chaincode:  
-   `./network.sh deployCC -ccn basic -ccp ../../chaincode/ -ccl javascript`
+   `./network.sh deployCC -ccn basic -ccp ../../chaincode/ -ccl typescript`
 7. Go to project root folder and run the whole app with:
    `yarn start`  
    _OR_
