@@ -2,26 +2,38 @@ import { useFormik } from "formik";
 import { FC, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Input, LoadingIcon } from "../../../components";
-import { Asset, AssetStatus, Transfer } from "../Asset.types";
-import { Actions, Status } from "../components";
-import { getAssetDetail, transferAsset } from "../repos";
+import { Asset, AssetStatus, Transfer, TxHistory } from "../Asset.types";
+import { Actions, Status, Table } from "../components";
+import { getAssetDetail, getAssetHistory, transferAsset } from "../repos";
 
 const Detail: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [asset, setAsset] = useState<Asset>();
+  const [history, setHistory] = useState<TxHistory[]>();
   const [loading, setLoading] = useState<boolean>();
 
   useEffect(() => {
-    if (id) fetchData(id);
-    else navigate("/");
+    if (id) {
+      fetchData(id);
+      fetchHistory(id);
+    } else navigate("/");
   }, [id]);
 
   const fetchData = useCallback(async (_id: string) => {
     try {
       const data = await getAssetDetail(_id);
-
       setAsset(data);
+    } catch (error) {
+      const err = await error;
+      alert(err.message);
+    }
+  }, []);
+
+  const fetchHistory = useCallback(async (_id: string) => {
+    try {
+      const data = await getAssetHistory(_id);
+      setHistory(data);
     } catch (error) {
       const err = await error;
       alert(err.message);
@@ -129,6 +141,12 @@ const Detail: FC = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
+        </section>
+      )}
+      {history && history.length > 0 && (
+        <section className="w-full flex flex-col rounded-md shadow-md bg-white p-4 gap-4">
+          <h2 className="text-lg font-medium mr-auto">Transaction History</h2>
+          <Table histories={history} />
         </section>
       )}
     </div>

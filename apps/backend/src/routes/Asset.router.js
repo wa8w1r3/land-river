@@ -10,6 +10,7 @@ const { OK, BAD_REQUEST, INTERNAL_SERVER_ERROR, CREATED } = StatusCodes;
 const path = {
   assets: "/assets",
   asset: "/assets/:assetId",
+  history: "/history/:assetId",
   transfer: "/transfer",
   lock: "/lock/:assetId",
   release: "/release/:assetId",
@@ -36,6 +37,21 @@ router.get(path.asset, async (req, res) => {
 router.get(path.assets, async (_, res) => {
   try {
     const assets = await AssetService.get();
+    return res.status(OK).json(assets);
+  } catch (error) {
+    return res.status(INTERNAL_SERVER_ERROR).json(error);
+  }
+});
+
+/**
+ * Get asset transaction history.
+ */
+router.get(path.history, async (req, res) => {
+  if (!req.params.assetId)
+    return res.status(BAD_REQUEST).json("Asset ID is required!");
+
+  try {
+    const assets = await AssetService.getAssetHistory(req.params.assetId);
     return res.status(OK).json(assets);
   } catch (error) {
     return res.status(INTERNAL_SERVER_ERROR).json(error);

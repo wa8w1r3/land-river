@@ -34,6 +34,21 @@ async function getById(id) {
 }
 
 /**
+ * Get asset transaction history.
+ *
+ * @param id
+ * @returns
+ */
+async function getAssetHistory(id) {
+  try {
+    const asset = await evaluateTransaction("GetAssetHistory", id);
+    return JSON.parse(asset);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+/**
  * Create new asset.
  *
  * @param asset
@@ -115,6 +130,7 @@ async function release(id) {
 export default {
   get,
   getById,
+  getAssetHistory,
   create,
   transfer,
   lock,

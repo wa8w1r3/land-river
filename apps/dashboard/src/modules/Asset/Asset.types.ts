@@ -16,3 +16,12 @@ export type Transfer = {
   id: string;
   owner: string;
 };
+
+export type TxHistory = {
+  txId: string;
+  timestamp: {
+    seconds: string;
+    nanos: number;
+  };
+  value: Asset;
+};
