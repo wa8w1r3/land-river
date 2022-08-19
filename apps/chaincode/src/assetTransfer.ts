@@ -106,6 +106,19 @@ export class AssetTransfer extends Contract {
   }
 
   /**
+   * Accept and sign asset transfer for buyer
+   */
+  @Transaction()
+  async AcceptAsset(ctx: Context, id: string): Promise<void> {
+    const asset = await this.GetAsset(ctx, id);
+
+    asset.status = AssetStatus.OWNED;
+
+    const data = Buffer.from(JSON.stringify(asset));
+    await ctx.stub.putState(id, data);
+  }
+
+  /**
    * Lock asset
    */
   @Transaction()
@@ -223,42 +236,42 @@ export class AssetTransfer extends Contract {
   public async InitLedger(ctx: Context): Promise<void> {
     const assets = [
       {
-        id: "1a1a1a1a",
+        id: "asset001",
         location: "1 Queen st",
         size: 500,
         owner: "Leslie Knope",
         status: AssetStatus.LOCKED,
       },
       {
-        id: "1a1a1a1b",
+        id: "asset002",
         location: "2 King st",
         size: 2500,
         owner: "Ron Swanson",
         status: AssetStatus.OWNED,
       },
       {
-        id: "1a1a1a1c",
+        id: "asset003",
         location: "3 Jack st",
         size: 45,
         owner: "Bert Macklin",
         status: AssetStatus.OWNED,
       },
       {
-        id: "1a1a1a1d",
+        id: "asset004",
         location: "4 Ace st",
         size: 10,
         owner: "Donna Meagle",
         status: AssetStatus.OWNED,
       },
       {
-        id: "1a1a1a1e",
+        id: "asset005",
         location: "5 Spade st",
         size: 150,
         owner: "Gerry Gergitch",
         status: AssetStatus.REGISTERED,
       },
       {
-        id: "1a1a1a1f",
+        id: "asset006",
         location: "6 Heart st",
         size: 1500,
         owner: "April Ludgate",

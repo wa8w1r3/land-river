@@ -34,6 +34,21 @@ async function getById(id) {
 }
 
 /**
+ * Get assets by owner.
+ *
+ * @param owner
+ * @returns
+ */
+async function getByOwner(owner) {
+  try {
+    const asset = await evaluateTransaction("QueryAssetsByOwner", owner);
+    return JSON.parse(asset);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+/**
  * Get asset transaction history.
  *
  * @param id
@@ -92,6 +107,24 @@ async function transfer(asset) {
 }
 
 /**
+ * Accept asset transfer.
+ *
+ * @param asset
+ * @returns
+ */
+async function accept(asset) {
+  try {
+    await submitTransaction("AcceptAsset", [asset.id]);
+
+    const result = await evaluateTransaction("GetAsset", asset.id);
+
+    return JSON.parse(result);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+/**
  * Lock asset.
  *
  * @param id
@@ -130,9 +163,11 @@ async function release(id) {
 export default {
   get,
   getById,
+  getByOwner,
   getAssetHistory,
   create,
   transfer,
+  accept,
   lock,
   release,
 };
