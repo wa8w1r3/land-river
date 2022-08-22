@@ -13,9 +13,9 @@ const Table = ({ assets, histories, onClick }: Props): ReactElement => {
     <table className="table-auto">
       <thead>
         <tr className="font-medium border-b-2">
-          <td className="p-4">{assets ? "ID" : "Transaction ID"}</td>
+          <td className="py-2">{assets ? "ID" : "Transaction ID"}</td>
           <td>Owner</td>
-          <td>{assets ? "Location" : "Timestamp"}</td>
+          <td>{assets ? "Location" : "Date"}</td>
           {assets && <td>Size</td>}
           <td className="text-center">Status</td>
         </tr>
@@ -28,7 +28,7 @@ const Table = ({ assets, histories, onClick }: Props): ReactElement => {
               className="cursor-pointer hover:bg-slate-50"
               onClick={() => onClick && onClick(asset.id)}
             >
-              <td className="p-2">{asset.id}</td>
+              <td className="py-2">{asset.id}</td>
               <td>{asset.owner}</td>
               <td>{asset.location}</td>
               <td>{asset.size} m2</td>
@@ -40,7 +40,7 @@ const Table = ({ assets, histories, onClick }: Props): ReactElement => {
         {histories &&
           histories.map((history) => (
             <tr key={history.txId} className="cursor-pointer hover:bg-slate-50">
-              <td className="p-2">{history.txId}</td>
+              <td className="p-2 text-sm">{history.txId}</td>
               <td>{history.value.owner}</td>
               <td>
                 {new Date(

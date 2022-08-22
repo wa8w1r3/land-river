@@ -66,7 +66,7 @@ const Detail: FC = () => {
         formik.resetForm();
         setLoading(false);
         navigate("/");
-      }, 3000);
+      }, 2000);
     } catch (error) {
       const err = await error;
       alert(err.message);
@@ -74,7 +74,7 @@ const Detail: FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-2/3 h-full mt-8 gap-8 z-10">
+    <div className="flex flex-col w-2/3 sm:w-full sm:px-8 h-full mt-8 gap-8 z-10">
       <section className="flex-col text-white">
         <h1 className="text-3xl font-bold">Asset Detail</h1>
       </section>
@@ -117,7 +117,7 @@ const Detail: FC = () => {
                 <button
                   className="ml-auto max-w-fit inline-flex justify-center px-4 py-1 text-sm font-medium text-white bg-amber-600 border border-transparent rounded-md hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-700"
                   onClick={() => formik.handleSubmit()}
-                  disabled={loading}
+                  disabled={loading || formik.values.owner === ""}
                 >
                   {loading ? (
                     <>

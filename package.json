@@ -1,6 +1,6 @@
 {
   "name": "land-river",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Land registration system using Hyperledger Fabric",
   "repository": "https://github.com/rumjuice/land-river.git",
   "license": "MIT",
@@ -12,6 +12,7 @@
     "prestart": "yarn",
     "backend": "yarn workspace @app/backend",
     "dashboard": "yarn workspace @app/dashboard",
+    "mobile": "yarn workspace @app/mobile",
     "chaincode": "yarn workspace @app/chaincode",
     "start": "concurrently --kill-others-on-fail \"yarn backend start\" \"yarn dashboard start\""
   },

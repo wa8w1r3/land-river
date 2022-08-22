@@ -10,11 +10,25 @@ const { OK, BAD_REQUEST, INTERNAL_SERVER_ERROR, CREATED } = StatusCodes;
 const path = {
   assets: "/assets",
   asset: "/assets/:assetId",
+  ownerAsset: "/assets/owner/:owner",
   history: "/history/:assetId",
   transfer: "/transfer",
+  accept: "/accept",
   lock: "/lock/:assetId",
   release: "/release/:assetId",
 };
+
+/**
+ * Get all assets.
+ */
+router.get(path.assets, async (_, res) => {
+  try {
+    const assets = await AssetService.get();
+    return res.status(OK).json(assets);
+  } catch (error) {
+    return res.status(INTERNAL_SERVER_ERROR).json(error);
+  }
+});
 
 /**
  * Get single asset by id.
@@ -32,11 +46,14 @@ router.get(path.asset, async (req, res) => {
 });
 
 /**
- * Get all assets.
+ * Get assets by owner.
  */
-router.get(path.assets, async (_, res) => {
+router.get(path.ownerAsset, async (req, res) => {
+  if (!req.params.owner)
+    return res.status(BAD_REQUEST).json("Owner is required!");
+
   try {
-    const assets = await AssetService.get();
+    const assets = await AssetService.getByOwner(req.params.owner);
     return res.status(OK).json(assets);
   } catch (error) {
     return res.status(INTERNAL_SERVER_ERROR).json(error);
@@ -83,6 +100,21 @@ router.post(path.transfer, async (req, res) => {
 
   try {
     const tx = await AssetService.transfer(req.body);
+    return res.status(OK).json(tx);
+  } catch (error) {
+    return res.status(INTERNAL_SERVER_ERROR).json(error);
+  }
+});
+
+/**
+ * Accept
+ */
+router.post(path.accept, async (req, res) => {
+  if (req.body.id === "" || !req.body.id)
+    return res.status(BAD_REQUEST).json("Asset ID is required!");
+
+  try {
+    const tx = await AssetService.accept(req.body);
     return res.status(OK).json(tx);
   } catch (error) {
     return res.status(INTERNAL_SERVER_ERROR).json(error);

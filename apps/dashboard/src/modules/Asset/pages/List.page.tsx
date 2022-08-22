@@ -43,7 +43,7 @@ const List: FC = () => {
   // }, []);
 
   return (
-    <div className="flex flex-col w-2/3 h-full mt-8 gap-8 z-10">
+    <div className="flex flex-col w-2/3 sm:w-4/5 h-full mt-8 gap-8 z-10">
       <section className="flex-col text-white">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <h3 className="font-medium">
