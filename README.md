@@ -106,7 +106,7 @@ We named land property as 'asset' objects within the system. This diagram shows 
 
 ## Screenshots
 
-![Mobile App](assets/mobile-sc.png)
+<img src="assets/mobile-sc.png" alt="Mobile App" width="250"/>
 
 ![Dashboard Home](assets/dashboard-sc.png)
 
