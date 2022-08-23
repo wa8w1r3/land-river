@@ -1,6 +1,6 @@
 # Land River
 
-Land title registration system using Hyperledger Fabric
+Transparent and semaless land title registration solution, built using Hyperledger Fabric.
 
 ### This project is a part of Capstone Project - George Brown College
 
@@ -20,78 +20,94 @@ Previous Contributors:
 
 ---
 
-## Project Description
+## Problem Description
 
-This project is an example project in Hyperledger Fabric for land registry use case. The system tries to imitate processes in real life and real estate transfers are at the core of the system.
+Many people are losing their land because of the fraud in land registry. A land can have multiple legal owners. As a matter of fact, **only 30% of the world population has their land registered LEGALLY**
+
+The process to transfer is extensive, too many documents and verifications with more than one organizations. This paper documents can be lost.
+
+With Land River, all the documents are stored digitally, and the hash is stored on the blockchain so that it's transparent and can't be duplicated. All the history of land transfer transaction are stored on the blockchain.
+
+> Secure land and property rights are not only at the heart of sustainable development, but they should also be lifted to the top of the global agenda. (_world bank, 2019_)
 
 ## Requirements
 
-The system should have at least 2 types of entities:
+The system should run with at least 2 organizations:
 
-1. Real estate property
-2. Property owner(government, private companies, individuals)
+1. Administrator (Governement - Land Registration Authority)
+2. Private stakeholders (Banks, Real estate agent, Notary, Public local authority)
 
-The system should allow locking mechanism of the real estate property by the government, if necessary. If the property is not locked by the government, then it should be tranferable at any moment to any owner entity.
+The core system of Land River can handle Transfering asset, asset management, digital paper trail, and digital signature for seller and buyer.
+
+## Process Flow Diagram
+
+![](assets/flow-diagram.jpg)
 
 ## Architecture Diagram
 
-![](assets/architecture-diagram.jpg)
+![](assets/sys-arch.jpg)
 
-## State Machine Diagram
+The system consist of:
+
+1. Blockchain Framework - Hyperledger Fabric
+2. API Service - NodeJS
+3. Admin Dashboard - ReactJS
+4. Owner's mobile app - React Native
+5. Integration with Identity Provider and other organizations (future plan)
+
+## State Diagram
 
 ![](assets/state-diagram.jpg)
 
-We named real estate property as 'asset' objects within the system. This diagram shows all possible states of asset.
+We named land property as 'asset' objects within the system. This diagram shows all possible states of an asset.
 
-## Transition Descriptions
-
-Any asset is unregistered initially. The government should register the asset and set asset owner during the registration. Once registered, owner of the asset can transfer it to another owner entity. Sometimes due to tax problems, law suits and different kinds or sanctions/restrictions government can lock the asset. Locked asset is not transferable by the owner. Only the government can unlock the asset and make it transferable again.
-
-## State Data Descriptions
-
-## Role Descriptions
-
-Admin - can register all kinds owners, asset, organization.
-
-Government Worker - can register/lock assets and register owners.
-
-Owner - can transfer assets (that belong to them) to another owner.
+---
 
 ## Prerequisites
 
-1. Ubuntu-18.0(8GB RAM and 10+ GB disk storage)
-2. Docker
-3. Node
+1. Ubuntu-18.0 (8GB RAM and 10+ GB disk storage) or MacOS
+2. Docker & Docker Compose
+3. Node >= 14
 4. Yarn
+5. Android Studio (for Android)
+6. XCode (for iOS)
 
-## Step by step setup instructions
+## Setup instructions
 
-3. Go to apps folder and run to avoid permission related problems:  
+1. Go to apps folder and run this to avoid permission issues:  
    `sudo chmod -R +x fabric-network`
-4. Go to apps/fabric-network and run to pull fabric images from docker hub:  
+2. Go to apps/fabric-network and run to pull fabric images from docker hub:  
    `./pullFabricImages.sh`
-5. Go to apps/fabric-network/test-network and run to build network up:  
+3. Go to apps/fabric-network/test-network and run to build network up:  
    `./network.sh down`  
    `./network.sh up createChannel -ca -s couchdb`
-
-6. From the same location run to deploy the chaincode:  
+4. From the same location run to deploy the chaincode:  
    `./network.sh deployCC -ccn basic -ccp ../../chaincode/ -ccl typescript`
-7. Go to project root folder and run the whole app with:
+5. Go to project root folder and run the whole app with:
    `yarn start`  
    _OR_
-8. Go to project root folder and run to install all dependencies for frontend and backend:  
+6. Go to project root folder and run to install all dependencies for frontend and backend:  
    `yarn install`
-9. From project root folder run following to start backend application at port 8080:  
+7. From project root folder run following to start backend application at port 8080:  
    `yarn backend start`
-10. From project root folder run following to start backend application at port 3000:  
-    `yarn frontend start`
+8. From project root folder run following to start backend application at port 3000:  
+   `yarn frontend start`
+
+### To run the mobile app
+
+1. Build the styling  
+   `yarn mobile tailwind:build`
+2. For iOS  
+   `yarn mobile pods`
+3. To run iOS  
+   `yarn mobile ios`
+4. To run Android  
+   `yarn mobile android`
 
 ## Screenshots
 
-![Home Empty](assets/sc-4.png)
+![Mobile App](assets/mobile-sc.png)
 
-![Home](assets/sc-3.png)
+![Dashboard Home](assets/dashboard-sc.png)
 
-![Create Asset Form](assets/sc-2.png)
-
-![Transfer Asset Form](assets/sc-1.png)
+![Asset Detail](assets/detail-sc.png)
